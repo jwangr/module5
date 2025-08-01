@@ -4,7 +4,8 @@ import calculatorRoutes from './routes/calculator-routes.js';
 const app = express(); // creates an express application
 const port = 3000;
 
-// Middlewares
+// Middlewares: app.use
+
 // serve static contact, via 'public' folder
 app.use('/', express.static('public'))
 app.use('/calculator', calculatorRoutes);
