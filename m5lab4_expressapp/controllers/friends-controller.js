@@ -2,7 +2,7 @@ import friends from '../models/friends.js';
 import friend_Validator from '../validation/friends-validator.js';
 const friendValidator = new friend_Validator();
 
-export default class friendsControllers {
+export default class FriendsController {
     filterFriends(req, res) {
 
         let filterLetter = req.query.letter;
