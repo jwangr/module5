@@ -2,66 +2,31 @@ import { Router } from 'express'; // creates a route (an express component, via 
 
 const router = Router();
 
+import calcController from '../controllers/calculator-controllers.js';
+const calculatorController = new calcController();
+
 router.get('/', (req, res) => {
-    res.send('Opening calculator!')
+    calculatorController.openCalculator(req, res);
 })
 
 router.get('/add', (req, res) => {
-    console.log(req.query); // http://localhost:3000/calculator/add?num1=4&num2=10 returns { num1: '4', num2: '10' }. Notice the string format
-    let num1 = parseInt(req.query.num1);
-    let num2 = parseInt(req.query.num2);
-    let sum = num1 + num2;
-
-    res.json({result:sum});
-})
-
-router.get('/add', (req, res) => {
-    console.log(req.query); // http://localhost:3000/calculator/add?num1=4&num2=10 returns { num1: '4', num2: '10' }. Notice the string format
-    let num1 = parseInt(req.query.num1);
-    let num2 = parseInt(req.query.num2);
-    let sum = num1 + num2;
-
-    res.json({result:sum});
-})
-
-router.get('/add', (req, res) => {
-    console.log(req.query); // http://localhost:3000/calculator/add?num1=4&num2=10 returns { num1: '4', num2: '10' }. Notice the string format
-    let num1 = parseInt(req.query.num1);
-    let num2 = parseInt(req.query.num2);
-    let total = num1 + num2;
-
-    res.json({result:total});
+    calculatorController.addNumbers(req, res);
 })
 
 router.get('/subtract', (req, res) => {
-    console.log(req.query); // http://localhost:3000/calculator/add?num1=4&num2=10 returns { num1: '4', num2: '10' }. Notice the string format
-    let num1 = parseInt(req.query.num1);
-    let num2 = parseInt(req.query.num2);
-    let total = num1 - num2;
-
-    res.json({result:total});
+    calculatorController.subtractNumbers(req, res)
 })
 
 router.get('/multiply', (req, res) => {
-    console.log(req.query); // http://localhost:3000/calculator/add?num1=4&num2=10 returns { num1: '4', num2: '10' }. Notice the string format
-    let num1 = parseInt(req.query.num1);
-    let num2 = parseInt(req.query.num2);
-    let total = num1 * num2;
-
-    res.json({result:total});
+    calculatorController.multiplyNumbers(req, res);
 })
 
 router.get('/divide', (req, res) => {
-    console.log(req.query); // http://localhost:3000/calculator/add?num1=4&num2=10 returns { num1: '4', num2: '10' }. Notice the string format
-    let num1 = parseInt(req.query.num1);
-    let num2 = parseInt(req.query.num2);
-    let total = num1 / num2;
-
-    res.json({result:total});
+    calculatorController.divideNumbers(req, res)
 })
 
 router.get('/about', (req, res) => {
-    res.send('About us!')
+    calculatorController.aboutCalculator(req, res);
 })
 
 export default router;

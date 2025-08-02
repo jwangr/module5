@@ -6,7 +6,7 @@ const port = 3000;
 
 // Middlewares: app.use
 
-// serve static contact, via 'public' folder
+// serve static content (named index.html), via 'public' folder
 app.use('/', express.static('public'))
 app.use('/calculator', calculatorRoutes);
 
