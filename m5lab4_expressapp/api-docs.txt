@@ -1,0 +1,104 @@
+Overview
+The Friends API provides endpoints to manage and query a collection of friend records. Each friend has properties such as id, name, gender, and age. The API supports filtering, retrieving, creating, and updating friend data.
+
+Base URL:
+http://localhost:3000/friends
+
+Endpoints
+1. GET /friends/
+Description: Retrieve the full list of friends.
+
+Response:
+
+200 OK — Returns an array of friend objects.
+
+500 Internal Server Error — If something goes wrong on the server.
+
+2. POST /friends/
+Description: Create a new friend entry.
+
+Request Body: JSON object with properties:
+
+name (string, required)
+
+gender (string, required)
+
+age (integer, required)
+
+Responses:
+
+201 Created — Friend successfully created.
+
+400 Bad Request — Invalid or missing data.
+
+500 Internal Server Error — Server error.
+
+3. GET /friends/filter
+Description: Filter friends by gender and/or by first letter of their name.
+
+Query Parameters:
+
+gender (string, optional) — e.g., male or female
+
+letter (string, optional) — First letter of the friend’s name, e.g., R
+
+Responses:
+
+200 OK — Returns filtered list of friends.
+
+400 Bad Request — Invalid query parameters.
+
+404 Not Found — No friends matched the filter.
+
+500 Internal Server Error — Server error.
+
+4. GET /friends/info
+Description: Retrieve client request header info.
+
+Response:
+
+200 OK — JSON object with:
+
+userAgent: User-Agent header string
+
+contentType: Content-Type header string
+
+accept: Accept header string
+
+500 Internal Server Error — Server error.
+
+5. GET /friends/{id}
+Description: Retrieve a single friend by ID.
+
+Path Parameters:
+
+id (integer, required) — The friend’s unique identifier.
+
+Responses:
+
+200 OK — Returns the friend object.
+
+400 Bad Request — Invalid ID format.
+
+404 Not Found — Friend with the specified ID does not exist.
+
+500 Internal Server Error — Server error.
+
+6. PUT /friends/{id}
+Description: Update existing friend data.
+
+Path Parameters:
+
+id (integer, required)
+
+Request Body: JSON friend object (same structure as for POST).
+
+Responses:
+
+200 OK — Friend updated successfully.
+
+400 Bad Request — Invalid input data.
+
+404 Not Found — Friend with specified ID does not exist.
+
+500 Internal Server Error — Server error.

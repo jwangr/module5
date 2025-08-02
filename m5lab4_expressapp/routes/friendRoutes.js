@@ -25,8 +25,8 @@ router.get('/info', (req, res) => {
 })
 
 // 3. Dynamic request param endpoint - get the friend matching the specific ID ie. /friends/3
-router.get('/:id', (req, res) => {
-    friendsControllers.getFriendById(req, res);
+router.get('/:id', (req, res, next) => {
+    friendsControllers.getFriendById(req, res, next);
 })
 
 // a POST request with data sent in the body of the request, representing a new friend to add to our list

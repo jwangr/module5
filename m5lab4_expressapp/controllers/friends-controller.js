@@ -1,4 +1,6 @@
 import friends from '../models/friends.js';
+import friend_Validator from '../validation/friends-validator.js';
+const friendValidator = new friend_Validator();
 
 export default class friendsControllers {
     filterFriends(req, res) {
@@ -37,14 +39,18 @@ export default class friendsControllers {
         )
     }
 
-    getFriendById(req, res) {
-        let friendId = Number(req.params.id); // 'id' here will be a value matching anything after the / in the request path
+    getFriendById(req, res, next) {
+        try {
+            friendValidator.validateId(req.params.id);
 
-        // Modify this function to find and return the friend matching the given ID, or a 404 if not found
-        const index = friends.find(friend => friend.id === friendId);
+            let friendId = Number(req.params.id); // 'id' here will be a value matching anything after the / in the request path
 
-        index ? res.status(200).json(index) : res.status(404).send('User not found');
+            // Modify this function to find and return the friend matching the given ID, or a 404 if not found
+            const index = friends.find(friend => friend.id === friendId);
 
+            index ? res.status(200).json(index) : res.status(404).send('User not found');
+        }
+        catch (err) { next(err) }
     }
 
     createFriend(req, res) {
