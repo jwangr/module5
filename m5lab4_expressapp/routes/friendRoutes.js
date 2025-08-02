@@ -14,8 +14,8 @@ router.get('/', (req, res) => {
 
 // filter endpoint, gets friends matching the gender from 'gender' query parameter ie. /friends/filter?gender=male
 // 1. Add support to also filter by a starting 'letter' query parameter ie. /friends/filter?letter=R
-router.get(`/filter`, (req, res) => {
-    friendsControllers.filterFriends(req, res);
+router.get(`/filter`, (req, res, next) => {
+    friendsControllers.filterFriends(req, res, next);
 } )
 
 // 2. Get information about this request from the headers

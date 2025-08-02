@@ -3,30 +3,36 @@ import friend_Validator from '../validation/friends-validator.js';
 const friendValidator = new friend_Validator();
 
 export default class FriendsController {
-    filterFriends(req, res) {
+    filterFriends(req, res, next) {
 
         let filterLetter = req.query.letter;
         let filterGender = req.query.gender;
+
         let matchingFriends = [...friends];
         const filter = []
 
-        if (filterGender) {
-            matchingFriends = matchingFriends.filter(friend => friend.gender == filterGender);
-            filter.push(filterGender);
-        }
+        try {
+            if (filterGender) {
+                friendValidator.validateFilter("gender", filterGender)
+                matchingFriends = matchingFriends.filter(friend => friend.gender == filterGender);
+                filter.push(filterGender);
+            }
 
-        if (filterLetter) {
-            matchingFriends = matchingFriends.filter(friend => friend.name.toLowerCase().includes(filterLetter.toLowerCase()));
-            filter.push(filterLetter);
-        }
+            if (filterLetter) {
+                friendValidator.validateFilter("letter", filterLetter)
+                matchingFriends = matchingFriends.filter(friend => friend.name.toLowerCase().includes(filterLetter.toLowerCase()));
+                filter.push(filterLetter);
+            }
 
-        if (matchingFriends.length > 0) {
-            // return valid data when the gender matches 
-            res.status(200).json(matchingFriends)
-        } else {
-            // and an error response when there are no matches
-            res.status(404).json({ error: "No friends matching the filter " + filter.toString() })
+            if (matchingFriends.length > 0) {
+                // return valid data when the gender matches 
+                res.status(200).json(matchingFriends)
+            } else {
+                // and an error response when there are no matches
+                res.status(404).json({ error: "No friends matching the filter " + filter.toString() })
+            }
         }
+        catch (err) { next(err) }
     }
 
     getHeaders(req, res) {
@@ -58,11 +64,11 @@ export default class FriendsController {
         console.log(newFriend) // 'body' will now be an object containing data sent via the request body
 
         // we can add some validation here to make sure the new friend object matches the right pattern
-        if (!newFriend.name || !newFriend.gender) {
-            res.status(500).json({ error: 'Friend object must contain a name and gender' });
-            return;
+        try {
+            friendValidator.validateCreateFriend(newFriend)
         }
-        else if (!newFriend.id) {
+        catch(err) { return next(err) }
+        if (!newFriend.id) {
             newFriend.id = friends.length + 1; // generate an ID if one is not present
         }
 
